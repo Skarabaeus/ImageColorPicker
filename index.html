@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Template</title>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+		  google.load("jquery", "1.4.2");
+		  google.setOnLoadCallback(function() {
+				$(document).ready(function(){
+
+
+					var imageData;
+
+					var ctx = document.getElementById('canvas').getContext('2d');  
+					var img = new Image();  
+					img.onload = function(){  
+					  ctx.drawImage(img, 0, 0); 
+					  
+					  
+					  try {
+							try { 
+								imageData = ctx.getImageData(0, 0, img.width, img.height)  
+							} catch (e) { 
+								netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+								imageData = ctx.getImageData(0, 0, img.width, img.height) 
+							} 						 
+						} catch (e) {
+							throw new Error("unable to access image data: " + e)
+						} 
+ 	
+ 	
+
+
+					}  
+					img.src = 'test.jpg';
+				
+				$("#canvas").bind("mousemove", function(e){
+					var offset = $("#canvas").offset();
+					var x = e.pageX - offset.left;
+					var y = e.pageY - offset.top;
+					$("#debug").text(imageData.data.length);
+					var pixel = ((y * img.width) + x) * 4
+					$("#mousepos").html("X = " + x + " Y= " + y + " Color: rgba(" + imageData.data[pixel] + ", " + imageData.data[(pixel + 1)] + ", " + imageData.data[(pixel + 2)] + ", " + imageData.data[(pixel + 3)] + ")");
+					$("#color").css("backgroundColor", "rgba(" + imageData.data[pixel] + ", " + imageData.data[(pixel + 1)] + ", " + imageData.data[(pixel + 2)] + ", " + imageData.data[(pixel + 3)] + ")")
+				});
+				
+
+				});
+			
+		  });
+
+
+		</script>
+		<!-- reset CSS -->
+		<link rel="stylesheet" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" type="text/css" media="screen" charset="utf-8"/>
+		<style type="text/css">
+
+		</style>
+  </head>
+  <body>
+	<p><br /><br /></p>
+	<canvas id="canvas" width="500" height="375"></canvas>
+	<div id="mousepos"></div>
+	<div id="color" style="width:100px;height:100px;"></div>
+	<div id="debug"></div>
+  </body>
+</html>
