@@ -4,7 +4,7 @@
 WARNING
 -------
 Image Color Picker is in a very early state of development and not quite
-ready for production usage. Check out this page for updates!
+ready for production usage.
 
 What does it do?
 ----------------
