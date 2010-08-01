@@ -1,5 +1,6 @@
 .currentColor, .selectedColor {
   border: 2px solid #000;
+  background-color: #fff;
   width:30px;
   height:30px;
 }
