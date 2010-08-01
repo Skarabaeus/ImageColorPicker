@@ -8,6 +8,7 @@ prefix = File.dirname( __FILE__ )
 # Directory variables
 src_dir = File.join( prefix, 'src' )
 build_dir = File.join( prefix, 'build' )
+dep_dir = File.join( prefix, 'dependencies' )
 
 # A different destination directory can be set by
 # setting DIST_DIR before calling rake
@@ -54,9 +55,14 @@ end
 directory dist_dir
 
 file jq => [dist_dir, base_files].flatten do
-  puts "Building jquery.ImageColorPicker.js..."
-  
+	puts "Copying CSS file..."
   sh "cp #{src_dir}/ImageColorPicker.css #{dist_dir}"
+  
+  puts "Copying JS dependencies..."
+  sh "cp #{dep_dir}/jquery-1.4.2.min.js #{dist_dir}"
+  sh "cp #{dep_dir}/jquery-ui-1.8.2.custom.min.js #{dist_dir}"
+
+  puts "Building jquery.ImageColorPicker.js..."  
   
   File.open(jq, 'w') do |f|
     f.write cat(base_files).gsub(/(Date:.)/, "\\1#{date}" ).gsub(/@VERSION/, version)
