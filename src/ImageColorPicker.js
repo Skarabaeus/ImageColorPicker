@@ -61,11 +61,17 @@ $.widget("ui.ImageColorPicker", {
 	},
 	
 	_d2h: function(d) {
+		var result;
 		if (parseInt(d)) {
-			return parseInt(d).toString(16);
+			result = parseInt(d).toString(16);
 		} else {
-			return d;
+			result = d;
 		}
+		
+		if (result.length === 1) {
+			result = "0" + result;
+		}
+		return result;
 	},
 	
 	_h2d: function(h) {

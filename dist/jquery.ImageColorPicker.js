@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Sun Aug 1 19:39:38 2010 +0200
+* Date: Sun Aug 1 23:34:57 2010 +0200
 */
 
 $.widget("ui.ImageColorPicker", {
@@ -73,11 +73,17 @@ $.widget("ui.ImageColorPicker", {
 	},
 	
 	_d2h: function(d) {
+		var result;
 		if (parseInt(d)) {
-			return parseInt(d).toString(16);
+			result = parseInt(d).toString(16);
 		} else {
-			return d;
+			result = d;
 		}
+		
+		if (result.length === 1) {
+			result = "0" + result;
+		}
+		return result;
 	},
 	
 	_h2d: function(h) {
