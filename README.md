@@ -14,7 +14,7 @@ Image Color Picker allows you to pick the color of a pixel of an image.
 Check out the [example folder](http://github.com/Skarabaeus/ImageColorPicker/tree/master/example)
 for details.
 
-In order to use the plugin you need to include the [jQuery](http://jquery.com) library.
+In order to use the plugin you need to include the [jQuery](http://jquery.com) library and at least the Core and Widget module of the [jQuery UI](http://jqueryui.com/) library.
 
 
 What you need to build your own ImageColorPicker
