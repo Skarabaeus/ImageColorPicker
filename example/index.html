@@ -8,10 +8,13 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 
-  			$("img").ImageColorPicker({
-  				afterColorSelected: function(event, color){ alert(color); }
+  			$("#test").ImageColorPicker({
+  				afterColorSelected: function(event, color){ $("#result_test").text(color); }
   			});
   		
+  			$("#test2").ImageColorPicker({
+  				afterColorSelected: function(event, color){ $("#result_test2").text(color); }
+  			});
   			
 			});
 		</script>
@@ -25,8 +28,14 @@
   <body>
 	<table>
     <tr>
-        <td><img src="test.jpg" alt="" id="test" /></td>
-        <td><img src="test2.jpg" alt="" id="test2" /></td>
+        <td>
+        	<img src="test.png" alt="" id="test" />
+        	<div id="result_test"></div>
+        </td>
+        <td>
+        	<img src="test2.jpg" alt="" id="test2" />
+        	<div id="result_test2"></div>
+        </td>
     </tr>
     
     
