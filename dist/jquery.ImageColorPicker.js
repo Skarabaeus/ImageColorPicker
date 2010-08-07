@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Sun Aug 1 23:34:57 2010 +0200
+* Date: Tue Aug 3 07:47:02 2010 -0700
 */
 
 $.widget("ui.ImageColorPicker", {
@@ -150,6 +150,7 @@ $.widget("ui.ImageColorPicker", {
 			var pixel = ((y * img.width) + x) * 4;
 			var imageData = that.imageData;
       that.$selectedColor.css("backgroundColor", "rgba(" + imageData.data[pixel] + ", " + imageData.data[(pixel + 1)] + ", " + imageData.data[(pixel + 2)] + ", " + imageData.data[(pixel + 3)] + ")");
+      that._trigger("afterColorSelected", 0, that.selectedColor());
     }); 
     
     this.$canvas.bind("mouseleave", function(e){
