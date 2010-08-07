@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Tue Aug 3 07:47:02 2010 -0700
+* Date: Sat Aug 7 18:08:15 2010 +0200
 */
 
 $.widget("ui.ImageColorPicker", {
@@ -125,7 +125,12 @@ $.widget("ui.ImageColorPicker", {
         this.imageData = ctx.getImageData(0, 0, img.width, img.height);  
 			}
     } catch (e2) {
-      throw new Error("unable to access image data: " + e);
+    	this.destroy();
+      throw new Error("ImageColor Picker: Unable to access image data. "
+      	+ "This could be either due " 
+      	+ "to the browser you are using (IE doesn't work) or image and script "
+      	+ "are saved on different servers or you run the script locally. "
+      	+ "The exception is: " + e2);
     } 
     
     // hide the original image

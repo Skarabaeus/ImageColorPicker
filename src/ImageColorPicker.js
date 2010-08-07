@@ -113,7 +113,12 @@ $.widget("ui.ImageColorPicker", {
         this.imageData = ctx.getImageData(0, 0, img.width, img.height);  
 			}
     } catch (e2) {
-      throw new Error("unable to access image data: " + e);
+    	this.destroy();
+      throw new Error("ImageColor Picker: Unable to access image data. "
+      	+ "This could be either due " 
+      	+ "to the browser you are using (IE doesn't work) or image and script "
+      	+ "are saved on different servers or you run the script locally. "
+      	+ "The exception is: " + e2);
     } 
     
     // hide the original image
