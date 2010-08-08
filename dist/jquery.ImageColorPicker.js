@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Sat Aug 7 18:08:15 2010 +0200
+* Date: Sat Aug 7 18:29:34 2010 +0200
 */
 
 $.widget("ui.ImageColorPicker", {
