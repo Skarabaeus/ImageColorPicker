@@ -144,7 +144,11 @@ $.widget("ui.ImageColorPicker", {
 			var y = e.pageY - offset.top;
 			var pixel = ((y * img.width) + x) * 4;
 			var imageData = that.imageData;
-			that.$currentColor.css("backgroundColor", "rgba(" + imageData.data[pixel] + ", " + imageData.data[(pixel + 1)] + ", " + imageData.data[(pixel + 2)] + ", " + imageData.data[(pixel + 3)] + ")");
+			that.$currentColor.css("backgroundColor", "rgba(" + imageData.data[pixel] 
+				+ ", " + imageData.data[(pixel + 1)] 
+				+ ", " + imageData.data[(pixel + 2)] 
+				+ ", " + imageData.data[(pixel + 3)] 
+				+ ")");
 		}); 
 		
 		this.$canvas.bind("click", function(e){
@@ -153,7 +157,11 @@ $.widget("ui.ImageColorPicker", {
 			var y = e.pageY - offset.top;
 			var pixel = ((y * img.width) + x) * 4;
 			var imageData = that.imageData;
-			that.$selectedColor.css("backgroundColor", "rgba(" + imageData.data[pixel] + ", " + imageData.data[(pixel + 1)] + ", " + imageData.data[(pixel + 2)] + ", " + imageData.data[(pixel + 3)] + ")");
+			that.$selectedColor.css("backgroundColor", "rgba(" + imageData.data[pixel] 
+				+ ", " + imageData.data[(pixel + 1)] 
+				+ ", " + imageData.data[(pixel + 2)] 
+				+ ", " + imageData.data[(pixel + 3)] 
+				+ ")");
 			that._trigger("afterColorSelected", 0, that.selectedColor());
 		}); 
 		
