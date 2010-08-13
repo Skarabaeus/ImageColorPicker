@@ -1,0 +1,2 @@
+	$.widget("ui.ImageColorPicker", uiImageColorPicker);
+})();

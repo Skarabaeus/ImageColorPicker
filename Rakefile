@@ -14,7 +14,7 @@ dep_dir = File.join( prefix, 'dependencies' )
 # setting DIST_DIR before calling rake
 dist_dir = ENV['DIST_DIR'] || File.join( prefix, 'dist' )
 
-base_files = %w{intro ImageColorPicker}.map { |js| File.join( src_dir, "#{js}.js" ) }
+base_files = %w{intro ImageColorPicker outro}.map { |js| File.join( src_dir, "#{js}.js" ) }
 
 jq = File.join( dist_dir, "jquery.ImageColorPicker.js" )
 jq_min = File.join( dist_dir, "jquery.ImageColorPicker.min.js" )
