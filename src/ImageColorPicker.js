@@ -39,13 +39,19 @@ var uiImageColorPicker = function(){
 
 		if (typeof(widget.$canvas.get(0).getContext) === 'function') { // FF, Chrome, ...
 			ctx = widget.$canvas.get(0).getContext('2d');
+			
+		// this does not work yet!	
 		} else if (typeof(G_vmlCanvasManager) !== 'undefined') { // IE, with excanvas
 			var ieCanvasElement = G_vmlCanvasManager.initElement(widget.$canvas.get(0));
 			var ctx = ieCanvasElement.getContext('2d');
+			
 		} else {
 			widget.destroy();
-			throw new Error("ImageColor Picker: Can't get canvas context. Use "
-				+ "Firefox, Chrome or include excanvas to your project.");
+			if (console) {
+				console.log("ImageColor Picker: Can't get canvas context. Use "
+					+ "Firefox, Chrome or include excanvas to your project.");
+			}
+
 		}
 
 		// draw the image in the canvas
@@ -65,11 +71,12 @@ var uiImageColorPicker = function(){
 			}
 		} catch (e2) {
 			widget.destroy();
-			throw new Error("ImageColor Picker: Unable to access image data. "
-				+ "This could be either due " 
-				+ "to the browser you are using (IE doesn't work) or image and script "
-				+ "are saved on different servers or you run the script locally. "
-				+ "The exception is: " + e2);
+			if (console) {
+				console.log("ImageColor Picker: Unable to access image data. "
+					+ "This could be either due " 
+					+ "to the browser you are using (IE doesn't work) or image and script "
+					+ "are saved on different servers or you run the script locally. ");
+			}
 		} 
 
 		// hide the original image
