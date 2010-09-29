@@ -22,11 +22,8 @@ var uiImageColorPicker = function(){
 		// store 2D context in widget for later access
 		widget.ctx = null;
 
-		widget.element.data("selectedColor", {
-			red: 0,
-			green: 0,
-			blue: 0
-		});
+		// rgb
+		widget.color = [0, 0, 0];
 		
 		// create additional DOM elements.
 		widget.$canvas = $('<canvas class="ImageColorPickerCanvas"></canvas>');
@@ -97,7 +94,7 @@ var uiImageColorPicker = function(){
 			var offset = that.$canvas.offset();
 			var x = e.pageX - offset.left;
 			var y = e.pageY - offset.top;
-			var pixel = ((y * img.width) + x) * 4;
+			var pixel = Math.round(((y * img.width) + x) * 4);
 			var imageData = that.imageData;
 			updateSelectedColor(that, imageData.data[pixel], imageData.data[(pixel + 1)], imageData.data[(pixel + 2)]);
 			that._trigger("afterColorSelected", 0, that.selectedColor());
@@ -143,10 +140,8 @@ var uiImageColorPicker = function(){
 		c.strokeRect (canvasWidth - 32, canvasHeight - 32, 30, 30);
 		
 		// set new selected color
-		var color = widget.element.data("selectedColor");
-		color.red = red;
-		color.green = green;
-		color.blue = blue;
+		var newColor = [red, green, blue];
+		widget.color = newColor;
 	}
 
 	return {
@@ -182,9 +177,7 @@ var uiImageColorPicker = function(){
 		},
 
 		selectedColor: function() {
-			var color = this.element.data("selectedColor");
-			
-			return "#" + _d2h(color.red) + _d2h(color.green) + _d2h(color.blue);
+			return "#" + _d2h(this.color[0]) + _d2h(this.color[1]) + _d2h(this.color[2]);
 		}
 
 	};	
