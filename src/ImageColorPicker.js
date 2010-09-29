@@ -37,10 +37,6 @@ var uiImageColorPicker = function(){
 			widget.ctx = widget.$canvas.get(0).getContext('2d');
 			
 		// this does not work yet!	
-		} else if (typeof(G_vmlCanvasManager) !== 'undefined') { // IE, with excanvas
-			var ieCanvasElement = G_vmlCanvasManager.initElement(widget.$canvas.get(0));
-			widget.ctx = ieCanvasElement.getContext('2d');
-			
 		} else {
 			widget.destroy();
 			if (console) {

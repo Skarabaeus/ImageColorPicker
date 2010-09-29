@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Tue Sep 28 23:01:45 2010 +0200
+* Date: Wed Sep 29 19:18:23 2010 +0200
 */
 (function(){
 var uiImageColorPicker = function(){
@@ -50,10 +50,6 @@ var uiImageColorPicker = function(){
 			widget.ctx = widget.$canvas.get(0).getContext('2d');
 			
 		// this does not work yet!	
-		} else if (typeof(G_vmlCanvasManager) !== 'undefined') { // IE, with excanvas
-			var ieCanvasElement = G_vmlCanvasManager.initElement(widget.$canvas.get(0));
-			widget.ctx = ieCanvasElement.getContext('2d');
-			
 		} else {
 			widget.destroy();
 			if (console) {
