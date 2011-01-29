@@ -8,7 +8,7 @@
 * 
 * Released under the MIT
 *
-* Date: Wed Sep 29 19:18:23 2010 +0200
+* Date: Wed Sep 29 23:35:47 2010 +0200
 */
 (function(){
 var uiImageColorPicker = function(){

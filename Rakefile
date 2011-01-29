@@ -59,8 +59,8 @@ file jq => [dist_dir, base_files].flatten do
   sh "cp #{src_dir}/ImageColorPicker.css #{dist_dir}"
   
   puts "Copying JS dependencies..."
-  sh "cp #{dep_dir}/jquery-1.4.2.min.js #{dist_dir}"
-  sh "cp #{dep_dir}/jquery-ui-1.8.2.custom.min.js #{dist_dir}"
+  sh "cp #{dep_dir}/jquery-1.4.4.min.js #{dist_dir}"
+  sh "cp #{dep_dir}/jquery-ui-1.8.9.custom.min.js #{dist_dir}"
 
   puts "Building jquery.ImageColorPicker.js..."  
   
