@@ -78,21 +78,17 @@ var uiImageColorPicker = function(){
 		var that = widget;
 
 		widget.$canvas.bind("mousemove", function(e){
-			var offset = that.$canvas.offset();
-			var x = e.pageX - offset.left;
-			var y = e.pageY - offset.top;
-			var pixel = ((y * img.width) + x) * 4;
-			var imageData = that.imageData;
-			updateCurrentColor(that, imageData.data[pixel], imageData.data[(pixel + 1)], imageData.data[(pixel + 2)]);
+      var point = imageCoordinates( that, e.pageX, e.pageY );
+      var color = lookupColor( that.imageData, point );
+
+      updateCurrentColor( that, color.red, color.green, color.blue );
 		}); 
 
 		widget.$canvas.bind("click", function(e){
-			var offset = that.$canvas.offset();
-			var x = e.pageX - offset.left;
-			var y = e.pageY - offset.top;
-			var pixel = Math.round(((y * img.width) + x) * 4);
-			var imageData = that.imageData;
-			updateSelectedColor(that, imageData.data[pixel], imageData.data[(pixel + 1)], imageData.data[(pixel + 2)]);
+      var point = imageCoordinates( that, e.pageX, e.pageY );
+      var color = lookupColor( that.imageData, point );
+
+      updateSelectedColor( that, color.red, color.green, color.blue );
 			that._trigger("afterColorSelected", 0, that.selectedColor());
 		}); 
 
@@ -104,8 +100,26 @@ var uiImageColorPicker = function(){
 		$(window).unload(function(e){
 			that.destroy();
 		});
-	};
-	
+	}; 
+
+  // for pageX and pageY, determine image coordinates using offset
+  var imageCoordinates = function( widget, pageX, pageY ) {
+    var offset = widget.$canvas.offset();
+
+    return { x: Math.round( pageX - offset.left ),
+             y: Math.round( pageY - offset.top ) };
+  }
+
+  // lookup color values for point [x,y] location in image
+  var lookupColor = function( imageData, point) {
+    var pixel =  ((point.y * imageData.width) + point.x) * 4;
+
+    return { red: imageData.data[pixel], 
+             green: imageData.data[(pixel + 1)], 
+             blue: imageData.data[(pixel + 2)] }
+
+  }
+
 	var updateCurrentColor = function(widget, red, green, blue) {
 		var c = widget.ctx;
 		var canvasWidth = widget.$canvas.attr("width");
