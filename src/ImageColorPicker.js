@@ -2,7 +2,7 @@ var uiImageColorPicker = function(){
 
 	var _d2h = function(d) {
 		var result;
-		if (parseInt(d)) {
+		if (! isNaN( parseInt(d) ) ) {
 			result = parseInt(d).toString(16);
 		} else {
 			result = d;
