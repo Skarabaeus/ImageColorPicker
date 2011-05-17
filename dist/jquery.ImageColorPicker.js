@@ -8,14 +8,14 @@
 * 
 * Released under the MIT
 *
-* Date: Wed Sep 29 23:35:47 2010 +0200
+* Date: Tue May 17 11:20:16 2011 -0700
 */
 (function(){
 var uiImageColorPicker = function(){
 
 	var _d2h = function(d) {
 		var result;
-		if (parseInt(d)) {
+		if (! isNaN( parseInt(d) ) ) {
 			result = parseInt(d).toString(16);
 		} else {
 			result = d;
@@ -30,14 +30,14 @@ var uiImageColorPicker = function(){
 	var _h2d = function(h) {
 		return parseInt(h,16);
 	};
-	
+
 	var _createImageColorPicker = function(widget) {
 		// store 2D context in widget for later access
 		widget.ctx = null;
 
 		// rgb
 		widget.color = [0, 0, 0];
-		
+
 		// create additional DOM elements.
 		widget.$canvas = $('<canvas class="ImageColorPickerCanvas"></canvas>');
 
@@ -48,8 +48,8 @@ var uiImageColorPicker = function(){
 
 		if (typeof(widget.$canvas.get(0).getContext) === 'function') { // FF, Chrome, ...
 			widget.ctx = widget.$canvas.get(0).getContext('2d');
-			
-		// this does not work yet!	
+
+		// this does not work yet!
 		} else {
 			widget.destroy();
 			if (console) {
@@ -64,25 +64,25 @@ var uiImageColorPicker = function(){
 		img.src = widget.element.attr("src");
 		widget.$canvas.attr("width", img.width);
 		widget.$canvas.attr("height", img.height);
-		widget.ctx.drawImage(img, 0, 0); 
-		
+		widget.ctx.drawImage(img, 0, 0);
+
 		// get the image data.
 		try {
-			try { 
-				widget.imageData = widget.ctx.getImageData(0, 0, img.width, img.height);	
-			} catch (e1) { 
+			try {
+				widget.imageData = widget.ctx.getImageData(0, 0, img.width, img.height);
+			} catch (e1) {
 				netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-				widget.imageData = widget.ctx.getImageData(0, 0, img.width, img.height);	
+				widget.imageData = widget.ctx.getImageData(0, 0, img.width, img.height);
 			}
 		} catch (e2) {
 			widget.destroy();
 			if (console) {
 				console.log("ImageColor Picker: Unable to access image data. "
-					+ "This could be either due " 
+					+ "This could be either due "
 					+ "to the browser you are using (IE doesn't work) or image and script "
 					+ "are saved on different servers or you run the script locally. ");
 			}
-		} 
+		}
 
 		// hide the original image
 		widget.element.hide();
@@ -91,23 +91,19 @@ var uiImageColorPicker = function(){
 		var that = widget;
 
 		widget.$canvas.bind("mousemove", function(e){
-			var offset = that.$canvas.offset();
-			var x = e.pageX - offset.left;
-			var y = e.pageY - offset.top;
-			var pixel = ((y * img.width) + x) * 4;
-			var imageData = that.imageData;
-			updateCurrentColor(that, imageData.data[pixel], imageData.data[(pixel + 1)], imageData.data[(pixel + 2)]);
-		}); 
+      var point = imageCoordinates( that, e.pageX, e.pageY );
+      var color = lookupColor( that.imageData, point );
+
+      updateCurrentColor( that, color.red, color.green, color.blue );
+		});
 
 		widget.$canvas.bind("click", function(e){
-			var offset = that.$canvas.offset();
-			var x = e.pageX - offset.left;
-			var y = e.pageY - offset.top;
-			var pixel = Math.round(((y * img.width) + x) * 4);
-			var imageData = that.imageData;
-			updateSelectedColor(that, imageData.data[pixel], imageData.data[(pixel + 1)], imageData.data[(pixel + 2)]);
+      var point = imageCoordinates( that, e.pageX, e.pageY );
+      var color = lookupColor( that.imageData, point );
+
+      updateSelectedColor( that, color.red, color.green, color.blue );
 			that._trigger("afterColorSelected", 0, that.selectedColor());
-		}); 
+		});
 
 		widget.$canvas.bind("mouseleave", function(e){
 			updateCurrentColor(that, 255, 255, 255);
@@ -118,7 +114,25 @@ var uiImageColorPicker = function(){
 			that.destroy();
 		});
 	};
-	
+
+  // for pageX and pageY, determine image coordinates using offset
+  var imageCoordinates = function( widget, pageX, pageY ) {
+    var offset = widget.$canvas.offset();
+
+    return { x: Math.round( pageX - offset.left ),
+             y: Math.round( pageY - offset.top ) };
+  }
+
+  // lookup color values for point [x,y] location in image
+  var lookupColor = function( imageData, point) {
+    var pixel =  ((point.y * imageData.width) + point.x) * 4;
+
+    return { red: imageData.data[pixel],
+             green: imageData.data[(pixel + 1)],
+             blue: imageData.data[(pixel + 2)] }
+
+  }
+
 	var updateCurrentColor = function(widget, red, green, blue) {
 		var c = widget.ctx;
 		var canvasWidth = widget.$canvas.attr("width");
@@ -133,7 +147,7 @@ var uiImageColorPicker = function(){
 		c.lineJoin = "round";
 		c.strokeRect (canvasWidth - 62, canvasHeight - 32, 30, 30);
 	}
-	
+
 	var updateSelectedColor = function(widget, red, green, blue) {
 		var c = widget.ctx;
 		var canvasWidth = widget.$canvas.attr("width");
@@ -147,7 +161,7 @@ var uiImageColorPicker = function(){
 		c.lineWidth = "3"
 		c.lineJoin = "round";
 		c.strokeRect (canvasWidth - 32, canvasHeight - 32, 30, 30);
-		
+
 		// set new selected color
 		var newColor = [red, green, blue];
 		widget.color = newColor;
@@ -158,7 +172,7 @@ var uiImageColorPicker = function(){
 		options: {
 
 		},
-		
+
 		_create: function() {
 			if (this.element.get(0).tagName.toLowerCase() === 'img') {
 				if (this.element.get(0).complete) {
@@ -173,7 +187,7 @@ var uiImageColorPicker = function(){
 		},
 
 		destroy: function() {
-			// default destroy		
+			// default destroy
 			$.Widget.prototype.destroy.apply(this, arguments);
 
 			// remove possible large array with pixel data
@@ -189,7 +203,7 @@ var uiImageColorPicker = function(){
 			return "#" + _d2h(this.color[0]) + _d2h(this.color[1]) + _d2h(this.color[2]);
 		}
 
-	};	
+	};
 }();
 	$.widget("ui.ImageColorPicker", uiImageColorPicker);
 })();
