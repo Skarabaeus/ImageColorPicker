@@ -182,6 +182,7 @@ var uiImageColorPicker = function(){
 
 			// remove additional elements
 			this.$canvas.remove();
+			this.element.unbind('load');
 			this.element.unwrap();
 			this.element.show();
 		},
