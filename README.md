@@ -1,41 +1,58 @@
-[Image Color Picker](http://github.com/Skarabaeus/ImageColorPicker)
+Image Color Picker
 ===================================================================
-
-WARNING
--------
-Image Color Picker is in a very early state of development and hasn't been maintained in years. Pull requests are welcome :-)
 
 What does it do?
 ----------------
 
-Image Color Picker allows you to pick the color of a pixel of an image.
+Image Color Picker allows you to pick the color of any pixel in an image using an HTML5 `<canvas>` overlay.
 
-Check out the [example folder](http://github.com/Skarabaeus/ImageColorPicker/tree/master/example)
-for details.
-
-There's also a working demo available [here](http://www.project-sierra.de/ImageColorPicker/example/)
-
-In order to use the plugin you need to include the [jQuery](http://jquery.com) library and at least the Core and Widget module of the [jQuery UI](http://jqueryui.com/) library.
+Check out the `example` folder for details.
 
 
-What you need to build your own ImageColorPicker
-------------------------------------------------
-Make sure that you have Java installed .
-If not, [go to this page](http://java.sun.com/javase/downloads/index.jsp) and download "Java Runtime Environment (JRE) 5.0"
+Usage (no dependencies)
+-----------------------
 
-How to build Image Color Picker
--------------------------------
+Include the script and (optionally) the CSS:
 
-Build the minified version of Image Color Picker:
+```html
+<link rel="stylesheet" href="dist/ImageColorPicker.css">
+<script src="src/ImageColorPicker.js"></script>
+```
 
-    rake min
+Then instantiate `ImageColorPicker` for any `<img>` element:
 
-Test Image Color Picker against JSLint:
+```html
+<img src="example/test.png" id="myImage">
+<div id="colorResult"></div>
 
-    rake lint
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    var img = document.getElementById("myImage");
 
-Remove all build files:
+    new ImageColorPicker(img, {
+      afterColorSelected: function (color) {
+        // color is a hex string like "#a1b2c3"
+        document.getElementById("colorResult").textContent = color;
+      }
+    });
+  });
+  </script>
+```
 
-    rake clean
+API
+---
+
+- `new ImageColorPicker(imgElement, options)`
+  - **`imgElement`**: an `<img>` DOM element.
+  - **`options.afterColorSelected`**: optional callback, called with a hex color string when the user clicks on the image.
+- `instance.selectedColor()`
+  - Returns the currently selected color as a hex string, e.g. `"#a1b2c3"`.
+- `instance.destroy()`
+  - Removes the canvas overlay and restores the original image in the DOM.
 
 
+Notes
+-----
+
+- The image must be loaded from the same origin as the page (or served with permissive CORS headers), otherwise browsers will block access to pixel data.
+- The original jQuery/jQuery UI plugin and build tooling have been removed in favor of this lightweight, dependency-free implementation.
